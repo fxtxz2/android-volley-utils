@@ -52,10 +52,12 @@ public class MySingleton {
 
     /**
      * 初始化
-     * @param context
+     * @param context 当前上下文
+     * @param headerMap 请求头
      */
-	public void init(Context context) {
+	public void init(Context context, Map<String, String> headerMap) {
         mCtx = context;
+        this.headerMap = headerMap;
         mRequestQueue = getRequestQueue();
         /**
          *  取运行内存阈值的1/8作为图片缓存

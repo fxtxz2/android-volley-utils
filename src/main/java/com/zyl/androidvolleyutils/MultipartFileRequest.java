@@ -21,8 +21,6 @@ import java.util.Map;
 /**
  * multipart/form-data的POST方式HTTP请求(支持File对象)
  * @author zyl
- *
- * @param <T>
  */
 public class MultipartFileRequest<T> extends Request<T> {
 	/**

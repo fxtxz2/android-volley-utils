@@ -20,8 +20,6 @@ import java.util.Map;
 /**
  * multipart/form-data的POST方式HTTP请求(只支持简单的String)
  * @author zyl
- *
- * @param <T>
  */
 public class MultipartRequest<T> extends Request<T> {
 	/**

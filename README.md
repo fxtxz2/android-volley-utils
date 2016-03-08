@@ -8,14 +8,13 @@ public class Application{
   @Override
    public void onCreate() {
      super.onCreate();
-     // volley请求单例  
-     MySingleton.getInstance().init(getApplicationContext());
      // 添加公共Header
      Map<String,String> headerMap =  new HashMap<>();
      // 添加Accept-Encoding: gzip
      headerMap.put("Accept-Encoding", "gzip");
      // 设置公共请求头
-     MySingleton.getInstance().setHeaderMap(headerMap);
+     // volley请求单例  
+     MySingleton.getInstance().init(getApplicationContext(), headerMap);
    }
 }
 ```
@@ -136,4 +135,4 @@ CustomRequest<DataBaseJson> jsObjRequest = new CustomRequest<>(
 MySingleton.getInstance().getRequestQueue().add(jsObjRequest);
 ```
 # Gradle引入
-`compile 'com.zyl.androidvolleyutils:androidvolleyutils:0.0.1'`
+`compile 'com.zyl.androidvolleyutils:androidvolleyutils:0.0.2'`

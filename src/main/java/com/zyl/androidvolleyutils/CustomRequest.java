@@ -17,7 +17,6 @@ import java.util.Map;
 /**
  * 普通的HTTP请求
  *
- * @param <T>
  * @author zyl
  */
 public class CustomRequest<T> extends Request<T> {
@@ -120,8 +119,8 @@ public class CustomRequest<T> extends Request<T> {
     /**
      * 从Map中取得get形式的URL参数
      *
-     * @param params
-     * @return
+     * @param params 请求参数
+     * @return get请求参数拼接
      */
     public static String getParamsFromMap(Map<String, String> params) {
         StringBuilder sb = new StringBuilder("");

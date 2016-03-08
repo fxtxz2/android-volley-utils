@@ -98,7 +98,7 @@ public class MyBasicNetworkVolley implements Network {
 				addCacheHeaders(headers, request.getCacheEntry());
 
 				// 添加Accept-Encoding: gzip
-				headers.put("Accept-Encoding", "gzip");
+//				headers.put("Accept-Encoding", "gzip");
 				if (headerMap != null){
 					for (Map.Entry<String, String> entry : headerMap.entrySet()){
 						headers.put(entry.getKey(), entry.getValue());
@@ -283,6 +283,8 @@ public class MyBasicNetworkVolley implements Network {
 
 	/**
 	 * Converts Headers[] to Map.
+	 * @param headers 请求头
+	 * @return Map 拼接请求头
 	 */
 	protected static Map<String, String> convertHeaders(Header[] headers) {
 		Map<String, String> result = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);

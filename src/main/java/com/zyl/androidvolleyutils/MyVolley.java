@@ -40,7 +40,8 @@ public class MyVolley {
      * @param context A @see Context to use for creating the cache dir.
      * @param stack   An @see HttpStack to use for the network, or null for
      *                default.
-     * @param headerMap
+     * @param headerMap 请求头
+     * @param maxDiskCacheBytes 缓存大小
      * @return A started @see RequestQueue instance.
      */
     public static RequestQueue newRequestQueue(Context context, HttpStack stack, int maxDiskCacheBytes,

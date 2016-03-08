@@ -84,8 +84,8 @@ public class MultipartEntity implements HttpEntity{
     /** 
      * 添加文本参数 
      *  
-     * @param paramName
-     * @param value 
+     * @param paramName 参数名
+     * @param value  参数value
      */  
     public void addStringPart(final String paramName, final String value) {  
         writeToOutputStream(paramName, value.getBytes(), TYPE_TEXT_CHARSET, BIT_ENCODING, "");  
@@ -117,8 +117,8 @@ public class MultipartEntity implements HttpEntity{
      * 把文件当文本参数添加,并且转化成base64
      * 添加文本参数
      *
-     * @param paramName
-     * @param value
+     * @param paramName 参数名
+     * @param value 参数值
      */
     public void addStringFilePart(final String paramName, final File value) {
         writeFileToOutputStream(paramName, value, TYPE_TEXT_CHARSET, BIT_ENCODING, "");
@@ -165,8 +165,8 @@ public class MultipartEntity implements HttpEntity{
     /**
      * 添加二进制参数, 例如Bitmap的字节流参数 
      *  
-     * @param paramName
-     * @param rawData 
+     * @param paramName 参数名
+     * @param rawData  参数值
      */  
     public void addBinaryPart(String paramName, final byte[] rawData) {  
         writeToOutputStream(paramName, rawData, TYPE_OCTET_STREAM, BINARY_ENCODING, "no-file");  
@@ -175,8 +175,8 @@ public class MultipartEntity implements HttpEntity{
     /** 
      * 添加文件参数,可以实现文件上传功能 
      *  
-     * @param key 
-     * @param file 
+     * @param key 参数名
+     * @param file 文件对象
      */  
     public void addFilePart(final String key, final File file) {  
         InputStream fin = null;  
