@@ -2,7 +2,7 @@
 volley基础配置，主要参考了[mcxiaoke/android-volley](https://github.com/mcxiaoke/android-volley)和[google官方的volley教程](http://developer.android.com/training/volley/requestqueue.html)实现了单列队列，可以添加公共的header,volley队列使用[OKHttp](http://square.github.io/okhttp/)作为HurlStack，支持multipart/form-data的POST方式HTTP请求。
 
 # 指南
-## 初始化和添加请求头
+## 初始化，添加请求头，代理设置
 ```Java
 public class Application{
   @Override
@@ -12,9 +12,14 @@ public class Application{
      Map<String,String> headerMap =  new HashMap<>();
      // 添加Accept-Encoding: gzip
      headerMap.put("Accept-Encoding", "gzip");
-     // 设置公共请求头
+     // 代理设置
+     Proxy proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved("192.168.198.40", 2386));
      // volley请求单例  
+     MySingleton.getInstance().init(getApplicationContext(), headerMap, proxy);
+     // 只设置头
      MySingleton.getInstance().init(getApplicationContext(), headerMap);
+     // 只设置代理
+     MySingleton.getInstance().init(getApplicationContext(), proxy);
    }
 }
 ```
@@ -135,4 +140,4 @@ CustomRequest<DataBaseJson> jsObjRequest = new CustomRequest<>(
 MySingleton.getInstance().getRequestQueue().add(jsObjRequest);
 ```
 # Gradle引入
-`compile 'com.zyl.androidvolleyutils:androidvolleyutils:0.0.2'`
+`compile 'com.zyl.androidvolleyutils:androidvolleyutils:0.0.3'`

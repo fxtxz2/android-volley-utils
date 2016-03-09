@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.zyl.androidlruimagecache.LruImageCache;
 
+import java.net.Proxy;
 import java.util.Map;
 
 /**
@@ -39,6 +40,10 @@ public class MySingleton {
      * 公共请求头
      */
     Map<String, String> headerMap;
+    /**
+     * 代理
+     */
+    private Proxy proxy;
 
     private static class MySingletomHolder{
         private static MySingleton INSTANCE = new MySingleton();
@@ -53,11 +58,39 @@ public class MySingleton {
     /**
      * 初始化
      * @param context 当前上下文
+     */
+    public void init(Context context) {
+        init(context, null, null);
+    }
+
+    /**
+     * 初始化
+     * @param context 当前上下文
      * @param headerMap 请求头
      */
-	public void init(Context context, Map<String, String> headerMap) {
+    public void init(Context context, Map<String, String> headerMap) {
+        init(context, headerMap, null);
+    }
+
+    /**
+     * 初始化
+     * @param context 当前上下文
+     * @param proxy 代理设置
+     */
+    public void init(Context context,  Proxy proxy) {
+        init(context,null,proxy);
+    }
+    /**
+     * 初始化
+     * @param context 当前上下文
+     * @param headerMap 请求头
+     * @param proxy 代理
+     */
+	public void init(Context context, Map<String, String> headerMap, Proxy proxy) {
         mCtx = context;
         this.headerMap = headerMap;
+//        Proxy proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved("192.168.198.40", 2386));
+        this.proxy = proxy;
         mRequestQueue = getRequestQueue();
         /**
          *  取运行内存阈值的1/8作为图片缓存
@@ -91,7 +124,8 @@ public class MySingleton {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
 //            mRequestQueue = MyVolley.newRequestQueue(mCtx.getApplicationContext());
-            mRequestQueue = MyVolley.newRequestQueue(mCtx.getApplicationContext(), new OkHttpStack(), getHeaderMap());
+
+            mRequestQueue = MyVolley.newRequestQueue(mCtx.getApplicationContext(), new OkHttpStack(proxy), headerMap);
         }
         return mRequestQueue;
     }

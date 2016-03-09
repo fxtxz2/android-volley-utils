@@ -17,6 +17,7 @@ import okhttp3.internal.huc.HttpsURLConnectionImpl;
  */
 public class OkHttpStack extends HurlStack {
     private final OkHttpClient client;
+    private Proxy proxy;
 
     public OkHttpStack() {
         this(new OkHttpClient());
@@ -29,9 +30,17 @@ public class OkHttpStack extends HurlStack {
         this.client = client;
     }
 
+    public OkHttpStack(Proxy proxy) {
+        this(new OkHttpClient());
+        this.proxy = proxy;
+    }
+
     @Override protected HttpURLConnection createConnection(URL url) throws IOException {
         String protocol = url.getProtocol();
-        Proxy proxy = client.proxy();
+        if (proxy == null){
+            proxy = client.proxy();
+        }
+
         OkHttpClient copy = client.newBuilder()
                 .proxy(proxy)
                 .build();
