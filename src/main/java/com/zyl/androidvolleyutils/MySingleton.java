@@ -46,7 +46,7 @@ public class MySingleton {
     private Proxy proxy;
 
     private static class MySingletomHolder{
-        private static MySingleton INSTANCE = new MySingleton();
+        private static final MySingleton INSTANCE = new MySingleton();
     }
     private MySingleton(){}
 
