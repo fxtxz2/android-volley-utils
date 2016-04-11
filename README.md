@@ -140,4 +140,4 @@ CustomRequest<DataBaseJson> jsObjRequest = new CustomRequest<>(
 MySingleton.getInstance().getRequestQueue().add(jsObjRequest);
 ```
 # Gradle引入
-`compile 'com.zyl.androidvolleyutils:androidvolleyutils:0.0.4'`
+`compile 'com.zyl.androidvolleyutils:android-volley-utils:0.0.5'`
