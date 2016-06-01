@@ -1,5 +1,5 @@
 # android-volley-utils
-volley基础配置，主要参考了[mcxiaoke/android-volley](https://github.com/mcxiaoke/android-volley)和[google官方的volley教程](http://developer.android.com/training/volley/requestqueue.html)实现了单列队列，可以添加公共的header,volley队列使用[OKHttp](http://square.github.io/okhttp/)作为HurlStack，支持multipart/form-data的POST方式HTTP请求。
+volley基础配置，主要参考了[mcxiaoke/android-volley](https://github.com/mcxiaoke/android-volley)和[google官方的volley教程](http://developer.android.com/training/volley/requestqueue.html)实现了单列队列，可以添加公共的header,volley队列使用[OKHttp](http://square.github.io/okhttp/)作为HurlStack，支持multipart/form-data的POST方式HTTP请求,支持gzip的http压缩。
 
 # 指南
 ## 初始化，添加请求头，代理设置
@@ -140,4 +140,4 @@ CustomRequest<DataBaseJson> jsObjRequest = new CustomRequest<>(
 MySingleton.getInstance().getRequestQueue().add(jsObjRequest);
 ```
 # Gradle引入
-`compile 'com.zyl.androidvolleyutils:android-volley-utils:0.0.9'`
+`compile 'com.zyl.androidvolleyutils:android-volley-utils:0.1.1'`

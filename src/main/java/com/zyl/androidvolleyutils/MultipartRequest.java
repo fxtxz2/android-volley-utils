@@ -1,7 +1,5 @@
 package com.zyl.androidvolleyutils;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -12,10 +10,14 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 /**
  * multipart/form-data的POST方式HTTP请求(只支持简单的String)
@@ -103,14 +105,56 @@ public class MultipartRequest<T> extends Request<T> {
 
 	@Override
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
+		String gzipString = getGzipString(response);
 		try {
-			String json = new String(response.data,
-					HttpHeaderParser.parseCharset(response.headers));
-			Log.v("json", json);
-			return Response.success(JSON.parseObject(json, clazz),
-					HttpHeaderParser.parseCacheHeaders(response));
+			String json = gzipString == null ? new String(response.data, HttpHeaderParser.parseCharset(response.headers)) : gzipString;
+			return Response.success(JSON.parseObject(json, clazz), HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {
 			return Response.error(new ParseError(e));
 		}
+	}
+	private String getGzipString(NetworkResponse response) {
+		String encoding = response.headers.get("Content-Encoding");
+		if(encoding != null && encoding.equals("gzip")){
+			StringBuilder stringBuilder = new StringBuilder();
+			GZIPInputStream gStream = null;
+			InputStreamReader reader = null;
+			BufferedReader in = null;
+			try {
+				gStream = new GZIPInputStream(new ByteArrayInputStream(response.data));
+				reader = new InputStreamReader(gStream);
+				in = new BufferedReader(reader);
+				String read;
+				while ((read = in.readLine()) != null) {
+					stringBuilder.append(read);
+				}
+				return stringBuilder.toString();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if (gStream != null){
+					try {
+						gStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (reader != null){
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (in != null){
+					try {
+						in.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return null;
 	}
 }
