@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
-version = "0.1.1"
+version = "0.1.2"
 group = "com.zyl.androidvolleyutils" // Maven Group ID for the artifact，一般填你唯一的包名
 
 android {
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 11
+        versionCode 12
         versionName version
     }
     buildTypes {
@@ -25,7 +25,7 @@ android {
 dependencies {
     compile 'com.alibaba:fastjson:1.1.52.android'
     compile 'org.apache.httpcomponents:httpcore:4.4.4'
-    compile 'com.zyl.androidlruimagecache:android-volley-lru-image-cache:0.0.1'
+    compile 'com.zyl.imagecache:android-volley-lru-image-cache:0.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.3.1'
     compile 'com.squareup.okhttp3:okhttp-android-support:3.3.1'
