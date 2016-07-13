@@ -8,8 +8,8 @@ import java.net.Proxy;
 import java.net.URL;
 
 import okhttp3.OkHttpClient;
-import okhttp3.internal.huc.HttpURLConnectionImpl;
-import okhttp3.internal.huc.HttpsURLConnectionImpl;
+import okhttp3.internal.huc.OkHttpURLConnection;
+import okhttp3.internal.huc.OkHttpsURLConnection;
 
 /**
  * An @see com.android.volley.toolbox.HttpStack implementation which
@@ -35,7 +35,8 @@ public class OkHttpStack extends HurlStack {
         this.proxy = proxy;
     }
 
-    @Override protected HttpURLConnection createConnection(URL url) throws IOException {
+    @Override
+    protected HttpURLConnection createConnection(URL url) throws IOException {
         String protocol = url.getProtocol();
         if (proxy == null){
             proxy = client.proxy();
@@ -45,8 +46,8 @@ public class OkHttpStack extends HurlStack {
                 .proxy(proxy)
                 .build();
 
-        if (protocol.equals("http")) return new HttpURLConnectionImpl(url, copy);
-        if (protocol.equals("https")) return new HttpsURLConnectionImpl(url, copy);
+        if (protocol.equals("http")) return new OkHttpURLConnection(url, copy);
+        if (protocol.equals("https")) return new OkHttpsURLConnection(url, copy);
         throw new IllegalArgumentException("Unexpected protocol: " + protocol);
     }
 }
