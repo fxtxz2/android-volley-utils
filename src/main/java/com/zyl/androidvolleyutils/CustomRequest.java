@@ -44,6 +44,7 @@ public class CustomRequest<T> extends Request<T> {
 
     private String requestUrl;
     private IGetNetData mGetNetData;// 获取网络原始数据后回调
+    private IGetNetworkResponse iGetNetworkResponse;// 获取网络原始数据后回调
 
     /**
      * @param method        HTTP 请求方法类型
@@ -77,6 +78,19 @@ public class CustomRequest<T> extends Request<T> {
         this.setShouldCache(false);
     }
 
+    public CustomRequest(int method,String url,Class<T> clazz,Map<String, String> headers,Map<String,
+            String> params, Response.Listener<T> listener, Response.ErrorListener errorListener,
+                         IGetNetworkResponse iGetNetworkResponse) {
+        super(method, url, errorListener);
+        this.clazz = clazz;
+        this.headers = headers;
+        this.listener = listener;
+        this.params = params;
+        this.requestUrl = url;
+        this.iGetNetworkResponse = iGetNetworkResponse;// 回调接口
+        this.setShouldCache(false);
+    }
+
     /**
      * 增加的回调接口 获取网络原始数据后回调
      * 当前使用场景 : 任务大厅列表数据请求后 在此方法内缓存网络数据
@@ -85,6 +99,13 @@ public class CustomRequest<T> extends Request<T> {
      */
     public interface IGetNetData {
         void handleNetDataCallBack(String url, String src);
+    }
+
+    /**
+     * 获取原始响应对象
+     */
+    public interface IGetNetworkResponse{
+        void getNetworkResponse(NetworkResponse response);
     }
 
     @Override
@@ -104,6 +125,7 @@ public class CustomRequest<T> extends Request<T> {
 
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
+        iGetNetworkResponse.getNetworkResponse(response);
         String gzipString = getGzipString(response);
         try {
             String json = gzipString == null ? new String(response.data, HttpHeaderParser.parseCharset(response.headers)) : gzipString;
