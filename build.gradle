@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
-version = "0.1.4"
+version = "0.1.5"
 group = "com.zyl.androidvolleyutils" // Maven Group ID for the artifact，一般填你唯一的包名
 
 android {
@@ -13,7 +13,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 14
+        versionCode 15
         versionName version
     }
     buildTypes {

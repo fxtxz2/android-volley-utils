@@ -125,7 +125,9 @@ public class CustomRequest<T> extends Request<T> {
 
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
-        iGetNetworkResponse.getNetworkResponse(response);
+        if (iGetNetworkResponse != null) {
+            iGetNetworkResponse.getNetworkResponse(response);
+        }
         String gzipString = getGzipString(response);
         try {
             String json = gzipString == null ? new String(response.data, HttpHeaderParser.parseCharset(response.headers)) : gzipString;
