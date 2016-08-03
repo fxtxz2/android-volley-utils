@@ -88,7 +88,6 @@ public class CustomRequest<T> extends Request<T> {
         this.params = params;
         this.requestUrl = url;
         this.iGetNetworkResponse = iGetNetworkResponse;// 回调接口
-        this.setShouldCache(false);
     }
 
     /**

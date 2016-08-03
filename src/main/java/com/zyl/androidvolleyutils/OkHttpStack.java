@@ -1,7 +1,5 @@
 package com.zyl.androidvolleyutils;
 
-import com.android.volley.toolbox.HurlStack;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
@@ -15,7 +13,7 @@ import okhttp3.internal.huc.OkHttpsURLConnection;
  * An @see com.android.volley.toolbox.HttpStack implementation which
  * uses OkHttp as its transport.
  */
-public class OkHttpStack extends HurlStack {
+public class OkHttpStack extends MyHurlStack {
     private final OkHttpClient client;
     private Proxy proxy;
 

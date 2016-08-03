@@ -23,7 +23,6 @@ import android.os.Build;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HttpStack;
-import com.android.volley.toolbox.HurlStack;
 
 import java.io.File;
 import java.util.Map;
@@ -60,7 +59,7 @@ public class MyVolley {
 
         if (stack == null) {
             if (Build.VERSION.SDK_INT >= 9) {
-                stack = new HurlStack();
+                stack = new MyHurlStack();
             }
 //            else {
 //                // Prior to Gingerbread, HttpUrlConnection was unreliable.

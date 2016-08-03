@@ -21,6 +21,8 @@ public class Application{
      MySingleton.getInstance().init(getApplicationContext(), headerMap);
      // 只设置代理
      MySingleton.getInstance().init(getApplicationContext(), proxy);
+     // 打开合并重复头
+     MySingleton.getInstance().setDuplicateHeader(true);
    }
 }
 ```
@@ -141,4 +143,4 @@ CustomRequest<DataBaseJson> jsObjRequest = new CustomRequest<>(
 MySingleton.getInstance().getRequestQueue().add(jsObjRequest);
 ```
 # Gradle引入
-`compile 'com.zyl.androidvolleyutils:android-volley-utils:0.1.5'`
+`compile 'com.zyl.androidvolleyutils:android-volley-utils:0.1.8'`

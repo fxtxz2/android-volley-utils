@@ -43,6 +43,11 @@ public class MultipartRequest<T> extends Request<T> {
 	private MultipartEntity entity = new MultipartEntity();
 
 	/**
+	 * 获取网络原始数据后回调
+	 */
+	private IGetNetworkResponse iGetNetworkResponse;
+
+	/**
 	 * 
 	 * @param method HTTP 请求方法类型
 	 * @param url  HTTP 请求URL
@@ -51,20 +56,30 @@ public class MultipartRequest<T> extends Request<T> {
 	 * @param params multipart/form-data请求参数
 	 * @param listener 交付监听
 	 * @param errorListener 错误监听
+	 * @param iGetNetworkResponse 回调获得原始响应对象   
 	 * @throws UnsupportedEncodingException 请求参数编码异常
 	 */
 	public MultipartRequest(int method, String url, Class<T> clazz,
 			Map<String, String> headers, Map<String, String> params,
-			Listener<T> listener, ErrorListener errorListener)
+			Listener<T> listener, ErrorListener errorListener, IGetNetworkResponse iGetNetworkResponse)
 			throws UnsupportedEncodingException {
 		super(method, url, errorListener);
 		this.clazz = clazz;
 		this.headers = headers;
 		this.listener = listener;
 
+		this.iGetNetworkResponse = iGetNetworkResponse;// 回调接口
+
 		for (Map.Entry<String, String> entry : params.entrySet()) {
 			entity.addStringPart(entry.getKey(), entry.getValue());
 		}
+	}
+
+	/**
+	 * 获取原始响应对象
+	 */
+	public interface IGetNetworkResponse{
+		void getNetworkResponse(NetworkResponse response);
 	}
 
 	@Override
@@ -105,6 +120,9 @@ public class MultipartRequest<T> extends Request<T> {
 
 	@Override
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
+		if (iGetNetworkResponse != null) {
+			iGetNetworkResponse.getNetworkResponse(response);
+		}
 		String gzipString = getGzipString(response);
 		try {
 			String json = gzipString == null ? new String(response.data, HttpHeaderParser.parseCharset(response.headers)) : gzipString;

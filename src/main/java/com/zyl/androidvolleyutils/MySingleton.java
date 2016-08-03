@@ -45,6 +45,11 @@ public class MySingleton {
      */
     private Proxy proxy;
 
+    /**
+     * 是否要合并重复header头
+     */
+    private boolean isDuplicateHeader = false;
+
     private static class MySingletomHolder{
         private static final MySingleton INSTANCE = new MySingleton();
     }
@@ -144,5 +149,13 @@ public class MySingleton {
 
     public void setHeaderMap(Map<String, String> headerMap) {
         this.headerMap = headerMap;
+    }
+
+    public boolean isDuplicateHeader() {
+        return isDuplicateHeader;
+    }
+
+    public void setDuplicateHeader(boolean duplicateHeader) {
+        isDuplicateHeader = duplicateHeader;
     }
 }
